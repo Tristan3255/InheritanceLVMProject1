@@ -7,6 +7,6 @@ public class SUPERCLASS {
 
     public SUPERCLASS(String name, UUID UUID){
         this.name = name;
-        this.UUID = UUID.randomUUID();
+        this.UUID = UUID;
     }
 }
