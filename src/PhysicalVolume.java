@@ -1,5 +1,5 @@
 import java.util.UUID;
-public class PhysicalVolume extends SUPERCLASS{
+public class PhysicalVolume extends LVMSYSTEM{
 
     private PhysicalDrive physicalDrive;
     public PhysicalVolume(String name, PhysicalDrive physicalDrive){
@@ -10,6 +10,8 @@ public class PhysicalVolume extends SUPERCLASS{
     public PhysicalDrive getHardDrive(){
         return physicalDrive;
     }
+
+
 
 
 }
