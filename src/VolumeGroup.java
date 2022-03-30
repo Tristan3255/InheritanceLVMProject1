@@ -4,22 +4,40 @@ import java.util.ArrayList;
 public class VolumeGroup extends LVMSYSTEM{
 
     private ArrayList<PhysicalVolume> PV = new ArrayList<PhysicalVolume>();
-    private ArrayList<LogicalVolume> LV = new ArrayList<LogicalVolume>();
     private int totalSize;
-    public VolumeGroup(String name) {
+    private int availiableSize;
+    public VolumeGroup(String name, PhysicalVolume Pv) {
         super(name, UUID.randomUUID());
+        PV.add(Pv);
+        for(PhysicalVolume p : PV){
+            totalSize += p.getHardDrive().getSize();
+            availiableSize += p.getHardDrive().getSize();
+        }
 
     }
 
+    public int getTotalSize(){
+        return totalSize;
+    }
+    public int getAvailiableSize(){
+        return availiableSize;
+    }
+
+    public void setAvailiableSize(int availiableSize){
+        this.availiableSize -= availiableSize;
+    }
+
+    public void updateVGSize(int n){
+        totalSize += n;
+        availiableSize += n;
+    }
 
     public ArrayList<PhysicalVolume> getPV() {
         return PV;
     }
 
-    public ArrayList<LogicalVolume> getLV() {
-        return LV;
-    }
 
+    /*
     public boolean addPV(PhysicalVolume PhysicalVol){
         String volName = PhysicalVol.getName();
         String HDName = PhysicalVol.getHardDrive().getName();
@@ -51,4 +69,5 @@ public class VolumeGroup extends LVMSYSTEM{
         return true;
 
     }
+    */
 }
