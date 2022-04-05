@@ -2,25 +2,21 @@ import java.util.UUID;
 public class PhysicalVolume extends LVMSYSTEM{
 
     private PhysicalDrive physicalDrive;
-    private boolean inVG;
+    private boolean VG;
 
     public PhysicalVolume(String name, PhysicalDrive physicalDrive){
         super(name, UUID.randomUUID());
         this.physicalDrive = physicalDrive;
-        inVG = false;
     }
 
     public PhysicalDrive getHardDrive(){
         return physicalDrive;
     }
 
-    public boolean isInVG(){
-        return inVG;
+    public void setPhysicalDrive(PhysicalDrive physicalDrive){
+        this.physicalDrive = physicalDrive;
     }
 
-    public void setInVG(boolean VG){
-        inVG = VG;
-    }
 
 
 
