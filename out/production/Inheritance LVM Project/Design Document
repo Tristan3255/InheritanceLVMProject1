@@ -1,0 +1,25 @@
+Level 1 : Physical Hard Drive - name, size (GB)
+
+Level 2 : Physical Volume - Factors: (1 physical hard drive, user provided name, UUID).
+                            Condition :(Only created with hard drive).
+                            Extra Information: Can be added to Volume Groups (Level 3). A 1 to 1 ratio with physical
+                            hard drive, a physical hard drive can only belong to 1 physical vol.
+
+Level 3: Volume Groups - Factors: (User provided name, UUID)
+                         Consists : (Consists of a list of Physical Volumes(Level 2), and a list of
+                         Logical Volumes(Level 4)
+                         Return Values : the size of the Volume Group after adding up all Physical Volumes
+                                       : the size left of the Volume group after subtracting each Logical Volume
+
+Level 4: Logical Volumes: Factors: (User provided name, UUID, an associated volume group)
+                          Condition: CANNOT exist without an associated volume group
+                                     Should not be able to create a Logical Volume without enough space.
+
+Classes:
+Main Class
+PhysicalDrive
+UUIDGenerator
+SUPERCLASS - contains name and UUID
+
+
+
