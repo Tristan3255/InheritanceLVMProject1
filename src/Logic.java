@@ -7,25 +7,25 @@ public class Logic {
     }
 
 
-    ArrayList<PhysicalDrive> PHD = new ArrayList<PhysicalDrive>();
-    ArrayList<PhysicalVolume> PV = new ArrayList<PhysicalVolume>();
-    ArrayList<LogicalVolume> LV = new ArrayList<LogicalVolume>();
-    ArrayList<VolumeGroup> VG = new ArrayList<VolumeGroup>();
+    ArrayList<PhysicalDrive> PHDlist = new ArrayList<PhysicalDrive>();
+    ArrayList<PhysicalVolume> PVlist = new ArrayList<PhysicalVolume>();
+    ArrayList<LogicalVolume> LVlist = new ArrayList<LogicalVolume>();
+    ArrayList<VolumeGroup> VGlist = new ArrayList<VolumeGroup>();
 
     public ArrayList<PhysicalDrive> getPHD() {
-        return PHD;
+        return PHDlist;
     }
 
     public ArrayList<PhysicalVolume> getPV() {
-        return PV;
+        return PVlist;
     }
 
     public ArrayList<LogicalVolume> getLV() {
-        return LV;
+        return LVlist;
     }
 
     public ArrayList<VolumeGroup> getVG() {
-        return VG;
+        return VGlist;
     }
 
     public void Runner(String choice){
@@ -34,6 +34,12 @@ public class Logic {
         }
         else if(choice.contains("install-drive")){
             installDrives(choice);
+        }
+        else if(choice.contains("pvcreate")){
+            pvCreate(choice);
+        }
+        else if(choice.equals("pvlist")){
+            pvlist();
         }
         else{
             System.out.println("That is not a valid command, please try again.");
@@ -48,17 +54,15 @@ public class Logic {
         int size = Integer.parseInt(rest.substring(rest.indexOf(" ") + 1, rest.length()-1));
         PhysicalDrive drive = new PhysicalDrive(name,size);
 
-        for(int i = 0; i < PHD.size(); i++){
-            if(PHD.get(i).getName().equals(name)){
+        for(int i = 0; i < PHDlist.size(); i++){
+            if(PHDlist.get(i).getName().equals(name)){
                 error = true;
             }
         }
 
         if(error == false){
-            PHD.add(drive);
-            System.out.println();
-            System.out.println("Installation Complete");
-            System.out.println();
+            PHDlist.add(drive);
+            System.out.println("Drive " + name + " successfully installed");
         }
         else{
             System.out.println();
@@ -68,12 +72,70 @@ public class Logic {
     }
 
     public void listDrives(){
-        if(PHD.size() == 0){
+        if(PHDlist.size() == 0){
             System.out.println("You currently have no hard drives installed.");
         }
         else {
-            for (int x = 0; x < PHD.size(); x++) {
-                System.out.print(PHD.get(x).getName() + " [" + PHD.get(x).getSize() + "G]");
+            for (int x = 0; x < PHDlist.size(); x++) {
+                System.out.print(PHDlist.get(x).getName() + " [" + PHDlist.get(x).getSize() + "G]");
+                System.out.println();
+            }
+        }
+    }
+
+    public void pvCreate(String input){
+        String rest = input.substring(9);
+        String pvName = (rest.substring(0, rest.indexOf(" ")));
+        String pdName = (rest.substring(rest.indexOf(" ") + 1));
+
+        if(PHDlist.size() != 0){
+            boolean repeated = false;
+            for(int i = 0; i < PVlist.size(); i++){
+                if(pvName.equals(PVlist.get(i).getName())){
+                    repeated = true;
+                    System.out.println("There is already a Physical Volume with the name " + pvName);
+                    break;
+                }
+            }
+            if(!repeated){
+                boolean pdFound = false;
+                for(int i = 0; i < PHDlist.size(); i++){
+                    if(PHDlist.get(i).getPV() != null && PHDlist.get(i).getName().equals(pdName)){
+                        System.out.println("This hard drive is already associated to another Physical Volume");
+                        pdFound = true;
+                    }
+                    if(PHDlist.get(i).getPV() == null && PHDlist.get(i).getName().equals(pdName)){
+                        PhysicalVolume newPV = new PhysicalVolume(pvName,PHDlist.get(i));
+                        PHDlist.get(i).setPV(newPV);
+                        PVlist.add(newPV);
+                        System.out.println("Physical Volume " + pvName + " successfully created");
+                        pdFound = true;
+                    }
+
+                }
+                if(!pdFound){
+                    System.out.println("There is no hard drive named " + pdName);
+                }
+            }
+
+        }
+        else{
+            System.out.println("You currently do not have any Physical Drives installed");
+        }
+    }
+
+    public void pvlist(){
+        if(PVlist.size() == 0){
+            System.out.println("There are currently no Physical Volumes created");
+        }
+        else{
+            for(int i = 0; i < PVlist.size(); i++){
+                System.out.print(PVlist.get(i).getName() + " : ");
+                System.out.print("[" + PVlist.get(i).getHardDrive().getSize()+"G] ");
+                if(PVlist.get(i).getVolumeGroup() != null){
+                    System.out.print("[" + PVlist.get(i).getVolumeGroup().getName() + "] ");
+                }
+                System.out.print("[" + PVlist.get(i).getUUID()+ "] ");
                 System.out.println();
             }
         }

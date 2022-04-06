@@ -4,9 +4,9 @@ public class LVMSYSTEM {
     private String name;
     private java.util.UUID UUID;
 
-    public LVMSYSTEM(String name, UUID UUID){
+    public LVMSYSTEM(String name){
         this.name = name;
-        this.UUID = UUID;
+        this.UUID = UUID.randomUUID();;
     }
 
     public String getName(){

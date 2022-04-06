@@ -3,11 +3,9 @@ import java.util.UUID;
 public class LogicalVolume extends LVMSYSTEM{
 
     private int size;
-    private VolumeGroup volumeGroup;
-    public LogicalVolume(String name,int size,  VolumeGroup volumeGroup){
-        super(name, UUID.randomUUID());
+    public LogicalVolume(String name,int size){
+        super(name);
         this.size = size;
-        this.volumeGroup = volumeGroup;
 
     }
 
@@ -15,8 +13,5 @@ public class LogicalVolume extends LVMSYSTEM{
         return size;
     }
 
-    public VolumeGroup getVolumeGroup(){
-        return  volumeGroup;
-    }
 
 }
