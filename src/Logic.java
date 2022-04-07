@@ -41,6 +41,21 @@ public class Logic {
         else if(choice.equals("pvlist")){
             pvlist();
         }
+        else if(choice.contains("lvcreate")){
+            lvcreate(choice);
+        }
+        else if(choice.equals("lvlist")){
+            lvlist();
+        }
+        else if(choice.contains("vgcreate")){
+            vgcreate(choice);
+        }
+        else if(choice.contains("vgextend")){
+            vgextend(choice);
+        }
+        else if(choice.equals("vglist")){
+            vglist();
+        }
         else{
             System.out.println("That is not a valid command, please try again.");
         }
@@ -139,5 +154,57 @@ public class Logic {
                 System.out.println();
             }
         }
+    }
+
+    public void lvcreate(String input){
+
+    }
+    public void lvlist(){
+
+    }
+    public void vgcreate(String input){
+        String rest  = input.substring(9);
+        String vgName = rest.substring(0, rest.indexOf(" "));
+        String pvName = rest.substring(rest.indexOf(" "));
+
+        if(PVlist.size() != 0){
+            boolean repeated = false;
+            for(int i = 0; i < VGlist.size(); i++){
+                if(VGlist.get(i).getName().equals(vgName)){
+                    repeated = true;
+                    System.out.println("There is already a Volume Group with the name " + vgName);
+                    break;
+                }
+            }
+            if(!repeated){
+                boolean pvFound = false;
+                for(int i = 0; i < PHDlist.size(); i++){
+                    if(PVlist.get(i).getName().equals(pvName) && PVlist.get(i).getVolumeGroup() != null){
+                        System.out.println("This Physical volume is already associated to another Volume Group");
+                        pvFound = true;
+                    }
+                    if(PVlist.get(i).getVolumeGroup() == null && PVlist.get(i).getName().equals(pvName)){
+                        VolumeGroup newVG = new VolumeGroup(vgName, PVlist.get(i));
+                        VGlist.add(newVG);
+                        PVlist.get(i).setVolumeGroup(newVG);
+                        System.out.println("Volume group " + vgName + " successfully created");
+                        pvFound = true;
+                    }
+                }
+                if(!pvFound){
+                    System.out.println("There is no physical volume named " + pvName);
+                }
+
+            }
+        }
+        else{
+            System.out.println("You do not have any physical volumes created");
+        }
+    }
+    public void vgextend(String input){
+
+    }
+    public void vglist(){
+
     }
 }
