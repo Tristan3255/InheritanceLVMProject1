@@ -5,28 +5,10 @@ public class Logic {
     public Logic(){
 
     }
-
-
     ArrayList<PhysicalDrive> PHDlist = new ArrayList<PhysicalDrive>();
     ArrayList<PhysicalVolume> PVlist = new ArrayList<PhysicalVolume>();
     ArrayList<LogicalVolume> LVlist = new ArrayList<LogicalVolume>();
     ArrayList<VolumeGroup> VGlist = new ArrayList<VolumeGroup>();
-
-    public ArrayList<PhysicalDrive> getPHD() {
-        return PHDlist;
-    }
-
-    public ArrayList<PhysicalVolume> getPV() {
-        return PVlist;
-    }
-
-    public ArrayList<LogicalVolume> getLV() {
-        return LVlist;
-    }
-
-    public ArrayList<VolumeGroup> getVG() {
-        return VGlist;
-    }
 
     public void Runner(String choice){
         if(choice.equals("list-drives")){

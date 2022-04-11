@@ -16,8 +16,6 @@ public class Main {
             userChoice = input.nextLine();
             System.out.println();
             logic.Runner(userChoice);
-
-
         }
 
     }

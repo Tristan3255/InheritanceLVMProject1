@@ -21,9 +21,6 @@ public class PhysicalVolume extends LVMSYSTEM{
         this.volumeGroup = volumeGroup;
     }
 
-    public void setPhysicalDrive(PhysicalDrive physicalDrive){
-        this.physicalDrive = physicalDrive;
-    }
 
 
 
